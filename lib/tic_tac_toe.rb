@@ -88,4 +88,58 @@ class TicTacToe
     end
   end
 
+  def won? 
+    WIN_COMBINATIONS.find do |i|
+      values = @board.values_at(*i)
+      values.all?('X') || values.all?('O')
+    end
+  end
+
+  def full?
+    if @board.find {|i| i == " "}
+      return false
+    else
+      return true
+    end
+  end
+
+  def draw?
+    if full?() && !won?()
+      return true
+    else
+      return false
+    end
+  end
+
+  def over?
+    if won?() || draw?()
+      return true
+    else
+      return false
+    end
+  end
+
+  def winner
+    if won?()
+      if current_player() == "X"
+        return "O"
+      elsif current_player() == "O"
+        return "X"
+      end
+    end
+  end
+
+  def play
+    until over?() == true
+      turn()
+      binding.pry
+    end
+
+    if won?()
+      puts "Congratulations #{winner()}!"
+    elsif draw?()
+      puts "Cat's Game!"
+    end
+  end
+
 end
